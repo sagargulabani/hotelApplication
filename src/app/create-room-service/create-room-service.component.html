@@ -1,0 +1,61 @@
+<div class = 'container'>
+  <form  [formGroup] = 'form' class = 'form-group'>
+    <div class = 'form-group'>
+      <label for = 'roomNumber'>Room Number</label>
+      <select class = 'form-control' formControlName = 'roomNumber' id = 'roomNumber'>
+
+        <option [disabled] = 'true' value = ''>Select a room </option>
+        <option *ngFor = 'let room of filledRooms' [value] = 'room.number'>
+          {{ room.number }}
+        </option>
+      </select>
+    </div>
+    <div class = 'form-group' formArrayName = 'items'>
+      <div class = 'form-group form-inline row' *ngFor = 'let itemControl of form.controls.items.controls; let i = index' >
+        <div [formGroupName] = 'i'>
+
+          <div>
+            <div class = 'form-group col-md-4'>
+              <ng-select formControlName = 'itemId' [multiple] = 'false' [options] = 'items'>
+              </ng-select>
+            </div>
+            <div class = 'form-group col-md-2'>
+              <label> Quantity</label>
+              <select class = 'form-control' formControlName = 'quantity'>
+                <option [disabled] = 'true' value = ''>Qty</option>
+                <option *ngFor = 'let number of quantity' [value] = 'number'>
+                  {{number}}
+                </option>
+              </select>
+            </div>
+
+            <div class = 'form-group col-md-4'>
+              <label>Order from </label>
+              <select class = 'form-control' formControlName = 'orderCategoryId'>
+                <option [disabled] = 'true' value = ''>Order from </option>
+                <option *ngFor = 'let orderCategory of orderCategories' [value] = 'orderCategory.id'>
+                  {{ orderCategory.name }}
+                </option>
+              </select>
+            </div>
+            <div class = 'form-group col-md-1'>
+              <a class = 'form-control' *ngIf = 'form.controls.items.controls.length > 1' (click) = 'removeItem(i)'>
+                remove
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class = 'form-group'>
+      <button class = 'btn btn-default form-control' (click) = 'addItem()'>
+          Insert New Item
+        </button>
+    </div>
+    <div class = 'form-group'>
+      <button class = 'form-control btn btn-primary' (click) =    'placeOrder()'  [disabled] = '!form.valid'>
+      Confirm Order
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,19 @@
+.top-buffer {
+  margin-top: 20px
+}
+
+
+.room {
+  background-color : white;
+  height : 50px;
+  border : 1px solid rgb(163, 163, 163);
+  padding-top: 13px;
+  color : black;
+  border-radius: 5px;
+  font-size: 17px;
+}
+
+.filled {
+  background-color: #5598DB;
+  color : white;
+}

@@ -1,0 +1,171 @@
+<div class = 'container-fluid'>
+  <div class = 'container-fluid row'>
+    <h3>Room No : <span *ngFor = 'let room of bookedRooms'>{{ room.roomNumber }} </span> </h3>
+    <h3>No Of Days : {{ noOfDays }}</h3>
+    <h3>Total Amount Pending : {{ totalAmountPending }}</h3>
+
+  </div>
+  <div class = 'btn-group btn-group-justified'>
+    <a class = 'btn btn-primary btn-lg' data-target = '#roomTransferModal' data-toggle = 'modal'>Room Transfer</a>
+    <a class = 'btn btn-success btn-lg' (click) = 'receivePayment()'>Receive Payment</a>
+    <a class = 'btn btn-danger btn-lg' (click) = 'paybackMoney()'>Return Payment</a>
+    <a class = 'btn btn-warning btn-lg' (click) = 'checkout()' data-target = '#checkoutModal' data-toggle = 'modal'>Checkout</a>
+  </div>
+
+  <div class = 'row'>
+    <div class = 'col-md-6'>
+      <div class = 'row'>
+        <div class = 'col-md-12'>
+          <h2> Guest Information</h2>
+          <table class = 'guestDetails'>
+            <tr>
+              <td>Guest Name :  </td>
+              <td>{{ guest?.name }}</td>
+            </tr>
+            <tr>
+              <td>Mobile No : </td>
+              <td>{{ guest?.mobile }}</td>
+            </tr>
+            <tr>
+              <td>Check in Date </td>
+              <td>{{ booking?.checkinDate | date:'yMMMdjms'}}</td>
+            </tr>
+            <tr *ngFor = 'let vehicle of vehicles'>
+              <td>Vehicle Number</td>
+              <td>{{ vehicle.number }}</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class = 'row'>
+        <div class = 'col-md-12'>
+          <h2> Room Details</h2>
+          <h4>Total Room Rent : {{ totalRoomRent }} </h4>
+          <h4>Total Tax : {{ totalTax }}</h4>
+          <table class = 'roomDetails'>
+            <tr>
+              <th>Room Number</th>
+              <th>Rate</th>
+              <th>Tax Rate</th>
+              <th>One Day Rent</th>
+              <th>No of days</th>
+              <th>Total Amount</th>
+            </tr>
+            <tr *ngFor = 'let room of bookedRooms'>
+              <td>{{ room.roomNumber }}</td>
+              <td>{{ room.rate }}</td>
+              <td>{{ booking.taxRate }}</td>
+              <td>{{ room.rate * (booking.taxRate + 100)/100 }}</td>
+              <td>{{ noOfDays}}</td>
+              <td>{{ noOfDays * room.rate * (booking.taxRate + 100)/100 }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class = 'row'>
+        <div class = 'col-md-12'>
+          <h2>Payment Received</h2>
+          <h4>Total Payment Received : {{ totalAmountReceived }}</h4>
+          <table class = 'paymentDetails'>
+            <tr>
+              <th>Date</th>
+              <th>Amount</th>
+            </tr>
+            <tr *ngFor = 'let received of receiveds'>
+              <td>{{ received.createdAt | date: 'yMMMdjms'}}</td>
+              <td>{{ received.amount }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class = 'row'>
+        <div class = 'col-md-12'>
+          <h2>Money Returned</h2>
+          <h4>Total Money Returned : {{ totalAmountPayback }}</h4>
+          <table class = 'paybackDetails'>
+            <tr>
+              <th>Date</th>
+              <th>Amount</th>
+            </tr>
+            <tr *ngFor = 'let payback of paybacks'>
+              <td>{{ payback.createdAt | date: 'yMMMdjms'}}</td>
+              <td>{{ payback.amount }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class = 'col-md-6 text-center'>
+      <h2>Room Bills</h2>
+      <h4>Room Service Total : {{ totalRoomServicesBill }}</h4>
+      <div class = 'row' *ngFor = 'let orderBill of orderBills;let i = index'>
+        <h4>{{ orderBill.createdAt | date : 'yMMMdjms'}}</h4>
+        <h5>Room Number : {{ orderBill.room }}</h5>
+        <button class = 'btn btn-default '(click) = 'printRestaurantBillNumber(i)'>
+          Print
+        </button>
+        <table class = 'orderBill'>
+          <tr>
+            <th>Order Item</th>
+            <th>Rate</th>
+            <th>Qty</th>
+            <th>Total</th>
+          </tr>
+          <tr *ngFor = 'let orderItem of orderBill.orderItems'>
+            <td>{{orderItem.item.name}}</td>
+            <td>{{orderItem.item.insideRate}}</td>
+            <td>{{orderItem.quantity}}</td>
+            <td>{{orderItem.quantity * orderItem.item.insideRate}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id = 'roomTransferModal' class = 'modal fade' role = 'dialog'>
+  <div class = 'modal-dialog'>
+    <div class = 'modal-content'>
+      <div class = 'modal-header'>
+        <button type = 'button' class = 'close' data-dismiss = 'modal'>&times;</button>
+        <h4 class = 'modal-title'>Room Transer</h4>
+      </div>
+      <div class = 'modal-body'>
+        <form [formGroup] = 'roomTransferForm' class = 'form-group'>
+
+          <div class = 'form-group'>
+            <label> Current Room </label>
+            <select class = 'form-control' formControlName = 'currentRoom'>
+              <option [disabled]="true" value = ''>Select Old Room</option>
+              <option *ngFor = 'let room of bookedRooms' [value] = 'room.roomNumber'>
+                {{ room.roomNumber }}
+              </option>
+            </select>
+          </div>
+
+          <div class = 'form-group'>
+            <label> New Room </label>
+            <select class = 'form-control' formControlName = 'newRoom'>
+              <option [disabled] = 'true' value = ''>Select New Room</option>
+              <option *ngFor = 'let room of emptyRooms' [value] = 'room.value'>
+                {{ room.label }}
+              </option>
+            </select>
+          </div>
+
+          <button type = 'button' class = 'form-control btn btn-primary' [disabled] = '!roomTransferForm.valid' (click) = 'transferRoom()' data-dismiss = 'modal'>Transfer Room
+          </button>
+        </form>
+      </div>
+      <div class = 'modal-footer'>
+        <button type = 'button' class = 'btn btn-default' data-dismiss = 'modal'>Close</button>
+      </div>
+    </div>
+  </div>
+</div>

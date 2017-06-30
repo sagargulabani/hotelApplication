@@ -1,0 +1,68 @@
+<h1>New Room</h1>
+<form [formGroup]="form" class = 'form-group col-md-6' novalidate>
+
+  <div class = 'form-group'>
+    <label for = 'entryBookNumber'>Entry Book Number</label>
+    <input class = 'form-control' type = 'number' formControlName = 'entryBookNo' id = 'entryBookNumber'>
+  </div>
+  <div class = 'form-group'>
+    <label for = 'guestName'>Guest Name </label>
+    <input class = 'form-control' type = 'text' formControlName = 'guestName' id = 'guestName'>
+  </div>
+
+  <div formArrayName = 'vehicleNumbers' >
+    <div *ngFor = 'let vehicleNumber of form.controls.vehicleNumbers.controls; let i = index' class = 'form-group' class = 'form-group'>
+      <div>
+        <span>Vehicle Number {{ i + 1 }}</span>
+        <a *ngIf = 'form.controls.vehicleNumbers.controls.length > 0' (click) = 'removeVehicleNumber(i)'>
+          Remove
+        </a>
+      </div>
+      <div [formGroupName] = 'i'>
+        <div>
+          <input class = 'form-control' type = 'text' formControlName = 'vehicleNumber'>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class = 'form-group'>
+    <button class = 'btn btn-success form-control' (click) = 'addVehicleNumber()'>Add Vehicle number </button>
+  </div>
+
+
+  <div class = 'form-group'>
+    <label for = 'mobileNumber'>Guest Mobile Number </label>
+    <input type = 'text' class = 'form-control' formControlName = 'mobileNumber' id = 'mobileNumber'>
+  </div>
+
+  <div class = 'form-group'>
+    <label for = 'roomNumber'>Room Numbers</label>
+    <ng-select formControlName = 'rooms' [options] = "options" [multiple] = "true" id = 'roomNumber'  >
+    </ng-select>
+  </div>
+  <div class = 'form-group'>
+    <label>Room Rate</label>
+    <input class = 'form-control' type = 'number' formControlName = 'rate'>
+    <span>per room </span>
+  </div>
+  <div class = 'form-group'>
+    <label>Advance amount</label>
+    <input class = 'form-control' type = 'number' formControlName = 'advance'>
+  </div>
+  <div class = 'form-group'>
+    <label > Tax Rate </label>
+    <input class = 'form-control' type = 'number' formControlName = 'taxRate'>
+  </div>
+  <p>
+    Total Amount {{ ((form.value.rate * form.value.rooms.length) * (1 + (form.value.taxRate / 100 )))/1 }} <br>
+  </p>
+  <p>
+    Amount Pending = {{ ((form.value.rate * form.value.rooms.length) * (1 + (form.value.taxRate / 100 ))) - form.value.advance }}
+  </p>
+  <div class = 'form-group'>
+    <button class = 'form-control' type = 'submit' [disabled] = '!form.valid' (click) = 'onSubmit()'>Submit </button>
+  </div >
+
+</form>

@@ -1,0 +1,53 @@
+.guestDetails {
+    width : 100%;
+    border: 1px solid black;
+    border-collapse : collapse;
+}
+
+.guestDetails th,td {
+  border: 1px solid black;
+  border-collapse : collapse;
+}
+
+.roomDetails {
+  width : 100%;
+  border: 1px solid black;
+}
+
+.roomDetails th,td {
+  text-align: center;
+  border: 1px solid black;
+  border-collapse : collapse;
+}
+
+.paymentDetails {
+  width : 100%;
+  border : 1px solid black;
+}
+
+.paymentDetails th,td {
+  border: 1px solid black;
+  border-collapse : collapse;
+}
+
+.paybackDetails {
+  width : 100%;
+  border : 1px solid black;
+}
+
+.paybackDetails th,td {
+  border: 1px solid black;
+  border-collapse : collapse;
+}
+
+.orderBill {
+  width : 75%;
+  border: 1px solid black;
+  margin : auto;
+}
+
+.orderBill th, td {
+  border : 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+}

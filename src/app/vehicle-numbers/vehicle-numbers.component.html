@@ -1,0 +1,20 @@
+<div class = 'container'>
+  <button class = 'btn btn-lg btn-success' (click) = 'printVehicleNumbers()'>Print Vehicle Numbers</button>
+  <div class = 'row'>
+    <div class = 'col-md-12'>
+      <table class = 'vehicleNumberDetails' id = 'vehicleNumberPrintSection'>
+        <tr>
+          <th>Rooms</th>
+          <th>Mobile</th>
+          <th>Vehicle Number</th>
+        </tr>
+        <tr *ngFor = 'let vehicleNumber of vehicleNumbers'>
+          <td>{{ vehicleNumber.rooms }}</td>
+          <td>{{ vehicleNumber.mobile }}</td>
+          <td>{{ vehicleNumber.vehicleNumber }}</td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+</div>

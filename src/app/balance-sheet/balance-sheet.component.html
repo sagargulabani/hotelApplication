@@ -1,0 +1,38 @@
+<div class = 'container'>
+  <div >
+    <table width = '100%'>
+      <tr>
+        <th>Room Number</th>
+        <th>No Of Days</th>
+        <th>Room Amount</th>
+        <th>Room Services</th>
+        <th>Total Amount</th>
+        <th>Total Received</th>
+        <th>Total Pending</th>
+        <th>Total Not Taken</th>
+        <th>Checkout</th>
+      </tr>
+      <tr *ngFor = 'let report of reports'>
+        <td>{{ report.roomNumber }}</td>
+        <td>{{ report.numberOfDays }}</td>
+        <td>{{ report.totalRoomAmountWithTax }}</td>
+        <td>{{ report.totalRoomServicesBill }}</td>
+        <td>{{ report.totalBillAmount }}</td>
+        <td>{{ report.totalReceived }}</td>
+        <td>{{ report.totalPending }}</td>
+        <td>{{ report.totalAmountNotTaken }}</td>
+        <td>{{ report.checkout }}</td>
+      </tr>
+      <tr class = 'total'>
+        <td></td>
+        <td></td>
+        <td>{{ totalRoomRentWithTaxCollection }}</td>
+        <td>{{ totalRoomServiceCollection }}</td>
+        <td>{{ totalCollection }}</td>
+        <td>{{ totalCashBalance }}</td>
+        <td>{{ totalPending }}</td>
+        <td>{{ totalAmountNotTaken }}</td>
+        <td></td>
+      </tr>
+    </table>
+  </div>

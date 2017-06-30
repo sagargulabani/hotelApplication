@@ -1,0 +1,13 @@
+
+.expenditureTable {
+  width : 100%;
+  border : 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.expenditureTable th,td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
